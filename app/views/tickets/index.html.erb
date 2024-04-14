@@ -3,19 +3,11 @@
 
 <h1>Tickets</h1>
 
-<% if current_user.manager? %>
-  <%= link_to "Manager Portal", manager_portal_tickets_path %> | 
-  <%= link_to "View Users", users_path %> | 
-<% end %>
 <%= link_to "New ticket", new_ticket_path %>
+<% if current_user.manager? %>
+   | <%= link_to "Manager Portal", manager_portal_tickets_path %>
+<% end %>
 <hr>
 
-<div id="tickets">
-  <% @tickets.each do |ticket| %>
-    <%= render ticket %>
-    <p>
-      <%= link_to "Show this ticket", ticket %>
-    </p>
-  <% end %>
-</div>
+<%= render 'tickets' %>
 
