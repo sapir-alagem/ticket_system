@@ -1,0 +1,14 @@
+<h1>Change Status</h1>
+
+<%= form_with(model: @ticket, url: ticket_path(@ticket), method: :patch) do |form| %>
+  <div class="field">
+    <%= form.label :status, "Status", value: params[:status] %>
+    <%= form.select :status, Ticket.statuses.keys.map { |status| [status.titleize, status] } %>
+  </div>
+  <br>
+  
+  <div class="actions">
+    <%= form.submit "Update Status", class: "btn btn-primary" %>
+    <%= link_to "Cancel", manager_portal_tickets_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

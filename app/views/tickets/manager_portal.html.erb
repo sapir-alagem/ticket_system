@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Manager Portal - Tickets</h1>
+<%= link_to "New ticket", new_ticket_path %>
+<br>
+<br>
+
+<div id="tickets">
+  <% @tickets.each do |ticket| %>
+    <%= render ticket %>
+    <p>
+      <%= link_to "Show this ticket", ticket %>
+      <% if current_user.manager? %>
+         | <%= link_to "Change Status", change_status_ticket_path(ticket) %>
+         | <%= link_to "Delete", ticket, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this ticket?" } %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
+

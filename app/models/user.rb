@@ -2,8 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_secure_token :authentication_token
+  enum :role, { user: 0, admin: 1 }
 
+  has_secure_token :authentication_token
   has_many :tickets
 
   def self.valid_credentials?(email, password)

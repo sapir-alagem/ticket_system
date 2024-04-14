@@ -1,7 +1,7 @@
 class TicketsController < ApplicationController
   require 'csv'
 
-  before_action :set_ticket, only: %i[ show edit update destroy ]
+  before_action :set_ticket, only: %i[ show edit update destroy change_status ]
 
   # GET /tickets or /tickets.json
   def index
@@ -10,6 +10,7 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1 or /tickets/1.json
   def show
+    @ticket = Ticket.includes(:user).find(params[:id])
   end
 
   # GET /tickets/new
@@ -61,9 +62,21 @@ class TicketsController < ApplicationController
     @ticket.destroy!
 
     respond_to do |format|
-      format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
+      format.html { redirect_to manager_portal_tickets_path, notice: "Ticket was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
+  end
+
+  def manager_portal
+    if current_user.manager?
+      @tickets = Ticket.all
+    else
+      redirect_to root_path
+      flash[:alert] = "You are not authorized to view requested page."
+    end
+  end
+
+  def change_status
   end
 
   private

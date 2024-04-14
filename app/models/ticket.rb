@@ -1,5 +1,5 @@
 class Ticket < ApplicationRecord
-  enum status: [:created, :pending, :resolved]
+  enum :status, [:created, :pending, :resolved]
 
-  has_many :tickets
+  belongs_to :user
 end
