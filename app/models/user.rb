@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :tickets
   has_many :comments
 
+  validates :name, presence: true
+
   def self.valid_credentials?(email, password)
     user = find_by(email: email)
     user&.valid_password?(password) ? user : nil

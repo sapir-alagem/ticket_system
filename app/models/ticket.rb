@@ -37,13 +37,22 @@ class Ticket < ApplicationRecord
     end
   end
 
-  def self.statistics
-    {
-      total_tickets: count,
-      created_tickets: where(status: :created).count,
-      pending_tickets: where(status: :pending).count,
-      resolved_tickets: where(status: :resolved).count
-    }
+  def self.statistics(user = nil)
+    if user.nil?
+      {
+        total_tickets: count,
+        created_tickets: where(status: :created).count,
+        pending_tickets: where(status: :pending).count,
+        resolved_tickets: where(status: :resolved).count
+      }
+    else
+      {
+        total_tickets: user.tickets.count,
+        created_tickets: user.tickets.where(status: :created).count,
+        pending_tickets: user.tickets.where(status: :pending).count,
+        resolved_tickets: user.tickets.where(status: :resolved).count
+      }
+    end
   end
 
   private

@@ -4,12 +4,9 @@ class TicketsController < ApplicationController
 
   # GET /tickets or /tickets.json
   def index
-    @statistics = Ticket.statistics
-    if params[:query].present?
-      @tickets = Ticket.search(params[:query])
-    else
-      @tickets = Ticket.all
-    end
+    @statistics = Ticket.statistics(current_user)
+    current_user.role == 'user' ? @tickets = current_user.tickets : @tickets = Ticket.all
+    @tickets = @tickets.search(params[:query]) if params[:query].present?
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -19,7 +16,7 @@ class TicketsController < ApplicationController
 
   # GET /tickets/new
   def new
-    # @ticket = Ticket.new
+    @ticket = Ticket.new
   end
 
   # GET /tickets/1/edit
