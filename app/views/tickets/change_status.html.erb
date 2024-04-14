@@ -1,6 +1,6 @@
 <h1>Change Status</h1>
 
-<%= form_with(model: @ticket, url: ticket_path(@ticket), method: :patch) do |form| %>
+<%= form_with(model: @ticket, url: ticket_path(@ticket), method: :patch, html: { id: "status-form" }) do |form| %>
   <div class="field">
     <%= form.label :status, "Status", value: params[:status] %>
     <%= form.select :status, Ticket.statuses.keys.map { |status| [status.titleize, status] } %>
@@ -8,7 +8,27 @@
   <br>
   
   <div class="actions">
-    <%= form.submit "Update Status", class: "btn btn-primary" %>
+    <%= form.submit "Update Status", 
+        class: "btn btn-primary", id: "change-status-submit-button" %>
     <%= link_to "Cancel", manager_portal_tickets_path, class: "btn btn-secondary" %>
   </div>
 <% end %>
+
+<script>
+  // client side validation 
+  document.addEventListener("DOMContentLoaded", function() {
+    const submitButton = document.getElementById("change-status-submit-button");
+
+    if (submitButton) {
+      submitButton.addEventListener("click", function(event) {
+        const selectedStatus = document.querySelector("#ticket_status").value;
+        const commentsCount = parseInt(<%= @ticket.comments.size %>);
+
+        if (selectedStatus === "resolved" && commentsCount === 0) {
+          event.preventDefault();
+          alert("You must post a comment before changing the status to resolved.");
+        }
+      });
+    }
+  });
+</script>

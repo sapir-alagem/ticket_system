@@ -77,6 +77,7 @@ class TicketsController < ApplicationController
   end
 
   def change_status
+    @ticket = Ticket.includes(:comments).find(params[:id])
   end
 
   private

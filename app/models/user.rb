@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_secure_token :authentication_token
   has_many :tickets
+  has_many :comments
 
   def self.valid_credentials?(email, password)
     user = find_by(email: email)

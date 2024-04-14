@@ -9,11 +9,12 @@
   <% @tickets.each do |ticket| %>
     <%= render ticket %>
     <p>
-      <%= link_to "Show this ticket", ticket %>
       <% if current_user.manager? %>
-         | <%= link_to "Change Status", change_status_ticket_path(ticket) %>
-         | <%= link_to "Delete", ticket, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this ticket?" } %>
+        <%= link_to "Leave Comment", new_comment_path(ticket_id: ticket.id) %> | 
+        <%= link_to "Change Status", change_status_ticket_path(ticket) %> | 
+        <%= link_to "Delete", ticket, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this ticket?" } %> | 
       <% end %>
+      <%= link_to "Show this ticket", ticket %>
     </p>
   <% end %>
 </div>

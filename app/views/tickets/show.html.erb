@@ -1,6 +1,10 @@
 <p style="color: green"><%= notice %></p>
 
+<h2>Ticket</h2>
+
 <%= render @ticket %>
+<br>
+<%= render 'comments/tickets_comments', locals: { ticket: @ticket } if @ticket.comments.any? %>
 
 <div>
   <%= link_to "Back to tickets", tickets_path %>
