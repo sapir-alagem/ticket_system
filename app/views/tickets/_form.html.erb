@@ -1,0 +1,27 @@
+<%= form_tag({controller: "tickets", action: "create"}, method: "post") do %>
+  <% if flash[:notice] %>
+    <div style="color: green">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div style="color: red">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+  
+  <div>
+    <%= label_tag :subject, "Subject", style: "display: block" %>
+    <%= text_field_tag :subject, nil, id: "subject" %>
+  </div>
+
+  <div>
+    <%= label_tag :content, "Content", style: "display: block" %>
+    <%= text_area_tag :content, nil, id: "content" %>
+  </div>
+
+  <div>
+    <%= submit_tag "Create Ticket" %>
+  </div>
+<% end %>
