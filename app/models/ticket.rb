@@ -9,6 +9,18 @@ class Ticket < ApplicationRecord
   validates :status, inclusion: { in: %w[created pending resolved] }
   validate :comments_present_for_resolved_status
 
+  scope :search, ->(query) {
+    where("subject LIKE :query OR content LIKE :query OR status = :status OR id = :id OR user_id IN (SELECT id FROM users WHERE name LIKE :user_query OR email LIKE :user_query)",
+          query: "%#{query}%",
+          status: status_query(query),
+          id: query.to_i,
+          user_query: "%#{query}%")
+  }
+
+  def self.status_query(query)
+    statuses[query.downcase] || query
+  end
+
   def self.add_new_ticket_to_csv(user, subject, content, status: "created")
     ticket_data = [user.name, user.email, subject, content, status]
     csv_file = "public/tickets.csv"
@@ -21,6 +33,15 @@ class Ticket < ApplicationRecord
         csv << ticket_data
       end
     end
+  end
+
+  def self.statistics
+    {
+      total_tickets: count,
+      created_tickets: where(status: :created).count,
+      pending_tickets: where(status: :pending).count,
+      resolved_tickets: where(status: :resolved).count
+    }
   end
 
   private

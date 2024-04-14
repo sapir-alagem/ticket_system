@@ -1,0 +1,15 @@
+<div id="statistics">
+    <h2>Statistics</h2>
+    <table>
+        <tr>
+            <% Ticket.statistics.each do |statistic, value| %>
+                <th><%= statistic.to_s.humanize %></th>
+            <% end %>
+        </tr>
+            <tr>
+                <% Ticket.statistics.each do |statistic, value| %>
+                    <td><%= value %></td>
+                <% end %>
+            </tr>
+    </table>
+</div>

@@ -3,7 +3,12 @@ class TicketsController < ApplicationController
 
   # GET /tickets or /tickets.json
   def index
-    @tickets = Ticket.all
+    @statistics = Ticket.statistics
+    if params[:query].present?
+      @tickets = Ticket.search(params[:query])
+    else
+      @tickets = Ticket.all
+    end
   end
 
   # GET /tickets/1 or /tickets/1.json
