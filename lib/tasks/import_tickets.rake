@@ -18,12 +18,13 @@ namespace :import do
       status = row['Status']
 
       requester = User.find_by(email: email)
+      valid_status = Ticket.statuses.include?(status) ? status : "created"
 
       if requester
-        Ticket.create!(
+        Ticket.create(
           subject: subject,
           content: content,
-          status: Ticket.statuses[status.to_sym],
+          status: Ticket.statuses[valid_status.to_sym],
           user_id: requester.id
         )
         successful_tickets += 1

@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
   before_action :set_ticket, only: %i[ show edit update destroy change_status ]
+  before_action :redirect_if_not_manager, only: [:manager_portal, :edit, :change_status]
 
   # GET /tickets or /tickets.json
   def index
@@ -46,7 +47,7 @@ class TicketsController < ApplicationController
 
   # DELETE /tickets/1 or /tickets/1.json
   def destroy
-    @ticket.destroy!
+    @ticket.destroy
 
     respond_to do |format|
       format.html { redirect_to manager_portal_tickets_path, notice: "Ticket was successfully destroyed.", status: :see_other }
@@ -76,5 +77,12 @@ class TicketsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def ticket_params
       params.require(:ticket).permit(:subject, :content, :status, :user_id)
+    end
+
+    def redirect_if_not_manager
+      unless current_user.manager?
+        redirect_to root_path
+        flash[:alert] = "You are not authorized to view requested page."
+      end
     end
 end

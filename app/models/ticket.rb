@@ -26,7 +26,9 @@ class Ticket < ApplicationRecord
     csv_file = "public/tickets.csv"
 
     if File.exist?(csv_file)
-      CSV.open(csv_file, "a+") { |csv| csv << ticket_data }
+      CSV.open(csv_file, "a+") do |csv|
+        csv << ticket_data
+      end
     else
       CSV.open(csv_file, "a+") do |csv|
         csv << ["Requester Name", "Requester Email", "Subject", "Content", "Status"]
