@@ -1,6 +1,4 @@
 class TicketsController < ApplicationController
-  require 'csv'
-
   before_action :set_ticket, only: %i[ show edit update destroy change_status ]
 
   # GET /tickets or /tickets.json
@@ -24,23 +22,7 @@ class TicketsController < ApplicationController
 
   # POST /tickets or /tickets.json
   def create
-    subject = params[:subject]
-    content = params[:content]
-    ticket_data = [current_user.name, current_user.email, subject, content, "created"]
-
-    csv_file = "public/tickets.csv"
-
-    if File.exist?(csv_file)
-      CSV.open(csv_file, "a+") do |csv|
-        csv << ticket_data
-      end
-    else
-      CSV.open(csv_file, "a+") do |csv|
-        csv << ["Requester Name", "Requester Email", "Subject", "Content", "Status"]
-        csv << ticket_data
-      end
-    end
-
+    Ticket.add_new_ticket_to_csv(current_user, params[:subject], params[:content])
     redirect_to tickets_path, notice: "Ticket was successfully added to file."
   end
 
