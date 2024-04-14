@@ -25,14 +25,22 @@ class TicketsController < ApplicationController
   def create
     subject = params[:subject]
     content = params[:content]
-
     ticket_data = [current_user.name, current_user.email, subject, content, "created"]
 
-    CSV.open("public/tickets.csv", "a+") do |csv|
-      csv << ticket_data
+    csv_file = "public/tickets.csv"
+
+    if File.exist?(csv_file)
+      CSV.open(csv_file, "a+") do |csv|
+        csv << ticket_data
+      end
+    else
+      CSV.open(csv_file, "a+") do |csv|
+        csv << ["Requester Name", "Requester Email", "Subject", "Content", "Status"]
+        csv << ticket_data
+      end
     end
 
-    redirect_to tickets_path, notice: "Ticket was successfully created."
+    redirect_to tickets_path, notice: "Ticket was successfully added to file."
   end
 
   # PATCH/PUT /tickets/1 or /tickets/1.json
