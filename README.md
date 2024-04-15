@@ -15,52 +15,55 @@
 
 * Key functionalities:
     - Ticket Creation: All users can create tickets.
-    - Ticket Management: Managers can create comments, change status of tickets and delete tickets.
-    - Users Management: Managers can edit users, give "Admin" or "Manager" permissions and delete users.
-    - CSV Import: By runing the rake 'import:tickets' in the terminal.
+    - Ticket Management: Managers can create comments, change ticket statuses, and delete tickets.
+    - Users Management: Managers can edit users, grant "Admin" or "Manager" permissions, and delete users.
+    - CSV Import: By running the rake 'import:tickets' in the terminal.
     - Search Functionality: Users can search and filter tickets based on various criteria from the same field.
 
 * Task #1:
-    1. All tickets are added to a file tickets.csv.
-    2. CSV file is created if not exist.
-    3. Tickets with emails that are not in the DB will not be created. Instead their data will be push into a log file in public/logs (dir will be created when first needed).
-    4. Tickets with invalid statuses will be created with the status "created".
+    - All tickets are added to a file named tickets.csv.
+    - If the CSV file does not exist, it is created.
+    - Tickets with emails not in the DB will not be created. Instead, their data will be logged in a public/logs directory (created as needed).
+    - Tickets with invalid statuses will be created with the status "created".
 
 * Task #2:
-    1. Run the command 'rake import:tickets' to improt data from tickets.csv into the DB as Ticket records.
-    2. Any signed up user can create new tickets. New ticketes will appear in CSV file until been imported.
-    3. Managers can view, leave comments, change statuses or delete imported tickets.
-
+    - Run the command 'rake import:tickets' to import data from tickets.csv into the DB as Ticket records.
+    - Any signed-up user can create new tickets. New tickets will appear in the CSV file until imported.
+    - Managers can view, leave comments, change statuses, or delete imported tickets.
 
 * Task #3:
-    1. Manager Portal is available to managers in '/tickets/manager_portal'.
-    2. Please login with manager@manager.com and the password 12345678, or sign up as new user and use manager@manager.com user to make new user a manager.
-    3. In the portal all managers tools are available.
+    - The Manager Portal is available to managers at '/tickets/manager_portal'.
+    - Please log in with manager@manager.com and the password 12345678, or sign up as a new user and use manager@manager.com user to make a new user a manager.
+    - In the portal, all manager tools are available.
 
 * Bonus #1:
-    1. To leave a comment - enter Manager portal and click Leave comment.
-    2. New comment form - theres client side validation to prevent empty comments.
-    3. Comments appear in Ticket show page.
+    - To leave a comment, enter the Manager portal and click "Leave comment".
+    - The new comment form has client-side validation to prevent empty comments.
+    - Comments appear on the Ticket show page.
 
 * Bonus #2:
-    1. Resolved status can be given to tickets with at least 1 comment.
-    2. Existnecse of comment will be checked with client and server validation.
+    - Resolved status can be given to tickets with at least 1 comment.
+    - The existence of a comment will be checked with client and server validation.
 
 * Bonus #3:
-    1. Tickets index is the homepage, there you will find a search field and statistics table.
-    2. This search can be used to filter by status or any other query you wish.
-    3. Query will be search within each ticket fields - subject, content, status, ticket_id, user name, user email.
-    4. Statistics will display data by user role and permissions.
+    - The Tickets index is the homepage, where you will find a search field and a statistics table.
+    - This search can be used to filter by status or any other query you wish.
+    - Queries will be searched within each ticket's fields - subject, content, status, ticket_id, user name, user email.
+    - Statistics will display data by user role and permissions.
 
 * Extra bonus:
-    1. App is using Devise for authentication and i have added authentication_tokens.
-    2. Authorization happens within the controllers.
-    3. Anyone could signup to the app, create tickets and view own tickets, but only a manager can give extra permissions (in users index).
-    4. I have decieded to use Devise so i could prevent access to some parts of my app easily by user roles.
+    - The app uses Devise for authentication, and authentication tokens have been added.
+    - Authorization happens within the controllers.
+    - Anyone can sign up for the app, create tickets, and view their own tickets, but only a manager can grant extra permissions (in the users index).
 
 * More ideas:
-    1. Mapping more errors in CSV file - validating status and other params when importing to db.
-    2. Allowing to search query inside comments content or manager data.
-    3. Allowing teams creation for managing tickets as a team.
-    4. Rake task to import users out of CSV or other files to DB.
-    5. Adding 'deleted' status to keep tickets and comments even when users wishes to destory them.
+    - Mapping more errors in the CSV file - validating status and other params when importing to the DB.
+    - Allowing searching queries inside comments content or manager data.
+    - Allowing teams creation for managing tickets as a team.
+    - Rake task to import users out of CSV or other files to the DB.
+    - Adding a 'deleted' status to keep tickets and comments even when users wish to destroy them.
+
+
+
+
+
