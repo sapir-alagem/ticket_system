@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :set_ticket, only: %i[ show edit update destroy change_status ]
+  before_action :set_ticket, only: %i[ edit update destroy ]
   before_action :redirect_if_not_manager, only: [:manager_portal, :edit, :change_status]
 
   # GET /tickets or /tickets.json
@@ -11,7 +11,7 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1 or /tickets/1.json
   def show
-    @ticket = Ticket.includes(:user).find(params[:id])
+    @ticket = Ticket.includes(:user, :comments).find(params[:id])
   end
 
   # GET /tickets/new

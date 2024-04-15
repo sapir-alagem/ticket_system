@@ -7,7 +7,7 @@
         <%= link_to "Change Status", change_status_ticket_path(ticket) %> | 
         <%= link_to "Delete", ticket, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this ticket?" } %> | 
       <% end %>
-      <%= link_to "Show this ticket", ticket %>
+      <%= link_to "Show", ticket %>
     </p>
     <br>
   <% end %>

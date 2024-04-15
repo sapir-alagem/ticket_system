@@ -13,7 +13,8 @@
 
   <div>
     <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
+    <%= form.text_area :content, required: true  %>
+    
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.hidden_field :ticket_id, value: params[:ticket_id] %>
   </div>
