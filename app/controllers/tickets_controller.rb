@@ -12,6 +12,10 @@ class TicketsController < ApplicationController
   # GET /tickets/1 or /tickets/1.json
   def show
     @ticket = Ticket.includes(:user, :comments).find(params[:id])
+    if current_user.user? && @ticket.user_id != current_user.id
+      redirect_to root_path
+      flash[:alert] = "You are not authorized to view requested page."
+    end
   end
 
   # GET /tickets/new
@@ -53,12 +57,7 @@ class TicketsController < ApplicationController
   end
 
   def manager_portal
-    if current_user.manager?
-      @tickets = Ticket.all
-    else
-      redirect_to root_path
-      flash[:alert] = "You are not authorized to view requested page."
-    end
+    @tickets = Ticket.all
   end
 
   def change_status
